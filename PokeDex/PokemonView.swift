@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PokemonView: View {
     // this view needs - pokemon name, pokemon type, image
+
     var body: some View {
         VStack {
             HStack {

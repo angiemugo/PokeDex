@@ -45,7 +45,6 @@
 		FD98ED8A2AEF8C1600C27521 = {
 			isa = PBXGroup;
 			children = (
-				FD98EDAE2AEFA01D00C27521 /* PokemonDetailView.swift */,
 				FD98ED952AEF8C1600C27521 /* PokeDex */,
 				FD98ED942AEF8C1600C27521 /* Products */,
 			);
@@ -62,6 +61,7 @@
 		FD98ED952AEF8C1600C27521 /* PokeDex */ = {
 			isa = PBXGroup;
 			children = (
+				FD98EDAE2AEFA01D00C27521 /* PokemonDetailView.swift */,
 				FD98ED962AEF8C1600C27521 /* PokeDexApp.swift */,
 				FD98ED982AEF8C1600C27521 /* ContentView.swift */,
 				FD98ED9A2AEF8C1600C27521 /* Item.swift */,

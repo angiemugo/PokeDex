@@ -25,7 +25,7 @@ struct PokeDexApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+           PokemonListView()
         }
         .modelContainer(sharedModelContainer)
     }
