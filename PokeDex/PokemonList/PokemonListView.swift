@@ -13,7 +13,7 @@ struct PokemonListView: View {
     @State private var searchText: String = ""
     @State private var presentedPokemon = NavigationPath()
     @State private var filters = Set<String>()
-    @StateObject private var viewModel = PokemonsViewModel()
+    @StateObject private var viewModel = PokemonListViewModel()
 
     var body: some View {
         NavigationStack(path: $presentedPokemon) {
@@ -50,6 +50,7 @@ struct PokemonListView: View {
             .task {
                 viewModel.fetchPokemons()
             }
+            .appAlert($viewModel.appAlert)
         }
     }
 }
