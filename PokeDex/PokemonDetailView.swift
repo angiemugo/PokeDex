@@ -8,32 +8,45 @@
 import SwiftUI
 
 struct PokemonDetailView: View {
+    @StateObject private var viewModel: PokemonDetailViewModel
+
+    init(pokemonID: Int) {
+        _viewModel = StateObject(wrappedValue: PokemonDetailViewModel(pokemonId: pokemonID))
+
+    }
     var body: some View {
-        HStack {
-            Image(systemName: "person")
-            Text("Pokemon")
-        }
-        List {
-            Section(header: Text("Type")) {
-                Text("some type")
-            }
+        VStack {
+            if let pokemon = viewModel.pokemonDetail {
+                HStack {
+                    Image(systemName: "person")
+                    Text(pokemon.name)
+                }
+                List {
+                    Section(header: Text("Type")) {
+                        ForEach(pokemon.pokemon_v2_pokemontypes, id: \.self) { type in
+                            Text(type.pokemon_v2_type?.name ?? "Type")
+                        }
+                    }
 
-            Section(header: Text("Abilities")) {
-                ForEach(1...5, id: \.self) {_ in 
-                    Text("some ability")
+                    Section(header: Text("Abilities")) {
+                        ForEach(pokemon.pokemon_v2_pokemonabilities, id: \.self) { ability in
+                            Text(ability.pokemon_v2_ability?.name ?? "Ability")
+                        }
+                    }
+
+                    Section(header: Text("Moves")) {
+                        ForEach(pokemon.pokemon_v2_pokemonmoves, id: \.self) { move in
+                            Text(move.pokemon_v2_move?.name ?? "Move")
+                        }
+                    }
                 }
             }
-
-            Section(header: Text("Moves")) {
-                ForEach(1...20, id: \.self) {_ in 
-                    Text("some move")
-                }
-            }
-
+        }.task {
+            viewModel.loadPokemonDetails()
         }
     }
 }
 
 #Preview {
-    PokemonDetailView()
+    PokemonDetailView(pokemonID: 10)
 }
