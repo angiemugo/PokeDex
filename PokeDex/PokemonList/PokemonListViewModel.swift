@@ -1,5 +1,5 @@
 //
-//  PokemonsViewModel.swift
+//  PokemonListViewModel.swift
 //  PokeDex
 //
 //  Created by Angie Mugo on 31/10/2023.
@@ -9,11 +9,13 @@ import Apollo
 import PokedexAPI
 import SwiftUI
 
-class PokemonsViewModel: ObservableObject{
+class PokemonListViewModel: ObservableObject{
     @Published var pokemons = [GetPokemonsQuery.Data.Pokemon_v2_pokemon]()
     @Published var errorMessage: String?
     @Published var activeRequest: Cancellable?
     @Published var pageOffset: Int?
+    @Published var appAlert: AppAlert?
+
 
     func loadMorePokemons() {
         guard let pageOffset = pageOffset else {
@@ -33,14 +35,14 @@ class PokemonsViewModel: ObservableObject{
                 if let pokemonData = graphQLResult.data {
                     pageOffset = 20 + page
                     self.pokemons.append(contentsOf: pokemonData.pokemon_v2_pokemon)
+                    self.appAlert = .message(title: "Success", message: "Pokèmons loaded")
                 }
 
                 if let errors = graphQLResult.errors {
-                    // handle this
+                    self.appAlert = .errors(errors: errors)
                 }
             case .failure(let error):
-                print("we got an error")
-                // handle this
+                self.appAlert = .errors(errors: [error])
 
             }
         }

@@ -44,6 +44,7 @@ struct PokemonDetailView: View {
         }.task {
             viewModel.loadPokemonDetails()
         }
+        .appAlert($viewModel.appAlert)
     }
 }
 
