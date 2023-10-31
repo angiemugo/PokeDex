@@ -6,30 +6,58 @@
 //
 
 import SwiftUI
+import PokedexAPI
+import SDWebImageSwiftUI
 
 struct PokemonView: View {
-    // this view needs - pokemon name, pokemon type, image
+    let pokemon: GetPokemonsQuery.Data.Pokemon_v2_pokemon
 
     var body: some View {
         VStack {
             HStack {
-                Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+                Text(pokemon.name)
                 Spacer()
-                Text("#001")
+                Text("#\(pokemon.id)")
             }
             Spacer()
             HStack {
                 VStack {
-                    Text("grass")
-                    Text("Poison")
+                    ForEach(pokemon.pokemon_v2_pokemontypes, id: \.self) { pokemonType in
+                        Text(pokemonType.pokemon_v2_type?.name ?? "")
+                    }
                 }
                 Spacer()
-                Image(systemName: "person")
+                WebImage(url: getImageURL())
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
             }
         }.padding()
     }
+
+    func getImageURL() -> URL? {
+        let jsonString = pokemon.pokemon_v2_pokemonsprites.first?.sprites ?? ""
+
+        if let data = jsonString.data(using: .utf8) {
+            do {
+                if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let frontDefault = jsonObject["front_default"] as? String {
+                    let url = "https://raw.githubusercontent.com/PokeAPI/sprites/master\(frontDefault)"
+                    return URL(string: url)
+
+                } else {
+                    print("Front Default URL not found or invalid format")
+                }
+            } catch {
+                print("Error parsing JSON: \(error)")
+            }
+        }
+        return nil
+    }
 }
 
-#Preview {
-    PokemonView()
-}
+//#Preview {
+//    PokemonView()
+//}
+
+
