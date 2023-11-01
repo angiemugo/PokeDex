@@ -15,9 +15,8 @@ class PokemonListViewModel: ObservableObject{
     @Published var activeRequest: Cancellable?
     @Published var pageOffset: Int?
     @Published var appAlert: AppAlert?
-//    @Published var colors = [PokemonsAndSpecies.Specy]()
-    var unfilteredPokemons = [PokemonsAndSpecies.Pokemon]()
     @Published var groupedColors =  [Int: [PokemonsAndSpecies.Specy]]()
+    var unfilteredPokemons = [PokemonsAndSpecies.Pokemon]()
 
     func loadMorePokemons() {
         guard let pageOffset = pageOffset else {
@@ -38,7 +37,6 @@ class PokemonListViewModel: ObservableObject{
                     pageOffset = 20 + page
                     self.pokemons.append(contentsOf: pokemonData.pokemon)
                     getColorsGrouped(for: pokemonData.species)
-//                    self.colors.append(contentsOf: pokemonData.species)
                     unfilteredPokemons = self.pokemons
                 }
 
@@ -73,6 +71,11 @@ enum MyColor: String, StringRepresentable {
     case red
     case blue
     case green
+    case yellow
+    case brown
+    case purple
+    case pink
+    case gray
 
     var color: Color {
         switch self {
@@ -83,6 +86,16 @@ enum MyColor: String, StringRepresentable {
         case .blue:
             return .blue
         case .green:
+            return .green
+        case .yellow:
+            return .yellow
+        case .brown:
+            return.brown
+        case .purple:
+            return .purple
+        case .pink:
+            return .pink
+        case .gray:
             return .green
         }
     }

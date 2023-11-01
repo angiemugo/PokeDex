@@ -23,7 +23,8 @@ struct PokemonView: View {
             HStack {
                 VStack(alignment: .leading) {
                     ForEach(pokemon.pokemon_v2_pokemontypes, id: \.self) { pokemonType in
-                        Text(pokemonType.pokemon_v2_type?.name.capitalized ?? "").roundEdges(backgroundColor: Color.gray.opacity(0.5), lineColor: .clear)
+                        Text(pokemonType.pokemon_v2_type?.name.capitalized ?? "")
+                            .roundEdges(backgroundColor: Color.gray.opacity(0.5), lineColor: .clear)
                     }
                 }
                 Spacer()

@@ -17,7 +17,7 @@ struct PokemonListView: View {
 
     var body: some View {
         NavigationStack(path: $presentedPokemon) {
-            ZStack {
+            ZStack(alignment: .bottomTrailing) {
                 VStack {
                     Text("Use the advanced search to find the Pokèmon by type, weakness, ability and more!").padding([.horizontal])
                     SearchView(searchText: $searchText, filters: $filters)
@@ -51,14 +51,15 @@ struct PokemonListView: View {
                     }
                 }
                 VStack {
-                    Spacer()
                     Button {
                         presentedPokemon.append(viewModel.pokemons.randomElement()!.id)
                     } label: {
+                        Image(systemName: "wand.and.stars")
                         Text("Random")
-                    }
-                }.frame(height: 30)
+                    }.tint(.primary)
+                }.frame(height: 40)
                 .roundEdges(backgroundColor: Color.yellow, lineColor: .clear)
+                .padding(.horizontal, 10)
             }.navigationDestination(for: Int.self) { id in
                 PokemonDetailView(pokemonID: id)
             }
