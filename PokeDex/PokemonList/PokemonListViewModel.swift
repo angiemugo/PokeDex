@@ -23,7 +23,6 @@ class PokemonListViewModel: ObservableObject{
             self.fetchPokemons(from: 0)
             return
         }
-
         fetchPokemons(from: pageOffset)
     }
 
@@ -58,5 +57,4 @@ class PokemonListViewModel: ObservableObject{
         let grouped = Dictionary(grouping: species, by: { $0.id})
         self.groupedColors = grouped
     }
-
 }
