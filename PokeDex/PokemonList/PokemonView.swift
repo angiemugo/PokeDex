@@ -11,6 +11,8 @@ import SDWebImageSwiftUI
 
 struct PokemonView: View {
     let pokemon: PokemonsAndSpecies.Pokemon
+    let imageURL: URL
+    let color: Color
 
     var body: some View {
         VStack {
@@ -24,25 +26,17 @@ struct PokemonView: View {
                 VStack(alignment: .leading) {
                     ForEach(pokemon.pokemon_v2_pokemontypes, id: \.self) { pokemonType in
                         Text(pokemonType.pokemon_v2_type?.name.capitalized ?? "")
-                            .roundEdges(backgroundColor: Color.gray.opacity(0.5), lineColor: .clear)
+                            .roundEdges(backgroundColor: color, lineColor: .clear)
                     }
                 }
                 Spacer()
-                WebImage(url: getImageURL())
+                WebImage(url: imageURL)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
             }
         }.padding()
-    }
-
-    func getImageURL() -> URL? {
-        let pokemonIndex =   pokemon.id
-
-        let baseURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
-        let imageURL = "\(baseURL)\(pokemonIndex).png"
-
-        return URL(string: imageURL)
+            .brightness(-0.1)
     }
 }
 

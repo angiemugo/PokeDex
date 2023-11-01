@@ -25,12 +25,13 @@ struct PokemonListView: View {
                         LazyVGrid(columns: columns) {
                             ForEach(0..<viewModel.pokemons.count, id: \.self) { index in
                                 let selectedPokemon = viewModel.pokemons[index]
-                                let pokemonColor = viewModel.groupedColors[selectedPokemon.id]?.first
+                                let pokemonStringColor = viewModel.groupedColors[selectedPokemon.id]?.first
+                                let pokemonColor = pokemonStringColor?.pokemon_v2_pokemonspecy?.pokemon_v2_pokemoncolor?.name.color()
                                 Button {
                                     presentedPokemon.append(selectedPokemon.id)
                                 } label: {
-                                    PokemonView(pokemon: selectedPokemon)
-                                        .background(MyColor(rawValue: (pokemonColor?.pokemon_v2_pokemonspecy?.pokemon_v2_pokemoncolor!.name)!)?.color ?? .clear)
+                                    PokemonView(pokemon: selectedPokemon, imageURL: getImageURL(selectedPokemon.id), color: pokemonColor ?? .clear)
+                                        .background(pokemonColor)
                                         .cornerRadius(15)
                                         .padding(.leading, 8)
                                         .padding(.trailing, 4)
@@ -61,7 +62,7 @@ struct PokemonListView: View {
                 .roundEdges(backgroundColor: Color.yellow, lineColor: .clear)
                 .padding(.horizontal, 10)
             }.navigationDestination(for: Int.self) { id in
-                PokemonDetailView(pokemonID: id)
+                PokemonDetailView(pokemonID: id, imageURL: getImageURL(id))
             }
             .navigationTitle("Pokèdex")
             .task {
@@ -73,10 +74,15 @@ struct PokemonListView: View {
             }
         }
     }
-}
 
-extension Color {
 
+    func getImageURL(_ id: Int) -> URL {
+        let pokemonIndex = id
+        let baseURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
+        let imageURL = "\(baseURL)\(pokemonIndex).png"
+
+        return URL(string: imageURL)!
+    }
 }
 
 #Preview {
