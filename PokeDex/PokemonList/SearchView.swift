@@ -13,23 +13,15 @@ struct SearchView: View {
     @FocusState private var fieldFocused: Bool
 
     var body: some View {
-        HStack {
             ZStack(alignment: .leading) {
                 Image(systemName: "magnifyingglass")
-                TextField("Search a Pokèmon",
+                TextField("Search a Pokèmon by name",
                           text: $searchText)
                 .padding(.horizontal, 30)
                 .textFieldStyle(.plain)
-            }.frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-            .padding()
-                .roundEdges()
-
-            Button("", systemImage: "line.3.horizontal.decrease.circle") {
-                filter()
-            }.frame(maxHeight: .infinity)
-                .roundEdges(backgroundColor: Color.gray.opacity(0.5), lineColor: .clear)
-        }.fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
-        .padding()
+            }.frame(height: 30)
+            .roundEdges()
+            .padding(.horizontal, 10)
     }
 
     func filter() {

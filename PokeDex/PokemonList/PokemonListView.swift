@@ -17,32 +17,48 @@ struct PokemonListView: View {
 
     var body: some View {
         NavigationStack(path: $presentedPokemon) {
-            VStack {
-                Text("Use the advanced search to find the Pokèmon by type, weakness, ability and more!").padding([.horizontal])
-                SearchView(searchText: $searchText, filters: $filters)
-                ScrollView {
-                    LazyVGrid(columns: columns) {
-                        ForEach(0..<viewModel.pokemons.count, id: \.self) { index in
-                            let selectedPokemon = viewModel.pokemons[index]
-                            Button {
-                                presentedPokemon.append(selectedPokemon.id)
-                            } label: {
-                                PokemonView(pokemon: selectedPokemon)
-                                    .background(.blue)
-                                    .cornerRadius(15)
-                                    .padding(8)
-                            }.buttonStyle(.plain)
+            ZStack {
+                VStack {
+                    Text("Use the advanced search to find the Pokèmon by type, weakness, ability and more!").padding([.horizontal])
+                    SearchView(searchText: $searchText, filters: $filters)
+                    ScrollView {
+                        LazyVGrid(columns: columns) {
+                            ForEach(0..<viewModel.pokemons.count, id: \.self) { index in
+                                let selectedPokemon = viewModel.pokemons[index]
+                                let pokemonColor = viewModel.groupedColors[selectedPokemon.id]?.first
+                                Button {
+                                    presentedPokemon.append(selectedPokemon.id)
+                                } label: {
+                                    PokemonView(pokemon: selectedPokemon)
+                                        .background(MyColor(rawValue: (pokemonColor?.pokemon_v2_pokemonspecy?.pokemon_v2_pokemoncolor!.name)!)?.color ?? .clear)
+                                        .cornerRadius(15)
+                                        .padding(.leading, 8)
+                                        .padding(.trailing, 4)
+                                }.buttonStyle(.plain)
+                            }
                         }
-                    }
 
-                    if viewModel.activeRequest == nil {
-                        Button(action: viewModel.loadMorePokemons) {
-                            Text("Load next page")
+                        if viewModel.activeRequest == nil {
+                            Button(action: viewModel.loadMorePokemons) {
+                                Text("Load next page")
+                            }
+                        } else {
+                            HStack {
+                                Text("Loading...")
+                                ProgressView()
+                            }
                         }
-                    } else {
-                        Text("Loading...")
                     }
                 }
+                VStack {
+                    Spacer()
+                    Button {
+                        presentedPokemon.append(viewModel.pokemons.randomElement()!.id)
+                    } label: {
+                        Text("Random")
+                    }
+                }.frame(height: 30)
+                .roundEdges(backgroundColor: Color.yellow, lineColor: .clear)
             }.navigationDestination(for: Int.self) { id in
                 PokemonDetailView(pokemonID: id)
             }
@@ -51,8 +67,15 @@ struct PokemonListView: View {
                 viewModel.fetchPokemons()
             }
             .appAlert($viewModel.appAlert)
+            .onChange(of: searchText) { newValue in
+                viewModel.filter(with: newValue)
+            }
         }
     }
+}
+
+extension Color {
+
 }
 
 #Preview {
