@@ -27,7 +27,7 @@ class PokemonListViewModel: ObservableObject{
     }
 
     func fetchPokemons(from page: Int = 0) {
-        self.activeRequest = Network.shared.apollo.fetch(query: GetPokemonListQuery(offset: page)) { [weak self] result in
+        self.activeRequest = Network.shared.client.fetch(query: GetPokemonListQuery(offset: page)) { [weak self] result in
             guard let self = self else { return }
             self.activeRequest = nil
             switch result {

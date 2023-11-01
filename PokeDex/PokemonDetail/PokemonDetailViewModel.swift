@@ -20,7 +20,7 @@ class PokemonDetailViewModel: ObservableObject {
     }
 
     func loadPokemonDetails() {
-        activeRequest = Network.shared.apollo.fetch(query: GetPokemonDetailsQuery(id: pokemonId)) { [weak self] result in
+        activeRequest = Network.shared.client.fetch(query: GetPokemonDetailsQuery(id: pokemonId)) { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -40,5 +40,4 @@ class PokemonDetailViewModel: ObservableObject {
             }
         }
     }
-
 }
