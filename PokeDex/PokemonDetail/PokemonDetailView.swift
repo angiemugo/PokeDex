@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct PokemonDetailView: View {
     @StateObject private var viewModel: PokemonDetailViewModel
+    let imageURL: URL
 
-    init(pokemonID: Int) {
+    init(pokemonID: Int, imageURL: URL) {
         _viewModel = StateObject(wrappedValue: PokemonDetailViewModel(pokemonId: pokemonID))
+        self.imageURL = imageURL
     }
     
     var body: some View {
@@ -24,9 +27,9 @@ struct PokemonDetailView: View {
                 VStack {
                     if let pokemon = viewModel.pokemonDetail {
                         HStack {
-                            Image(systemName: "person")
-                            Text(pokemon.name)
-                        }
+                            WebImage(url: imageURL)
+                            Text(pokemon.name.capitalized)
+                        }.frame(height: 30)
                         List {
                             Section(header: Text("Type")) {
                                 ForEach(pokemon.pokemon_v2_pokemontypes, id: \.self) { type in
@@ -58,5 +61,5 @@ struct PokemonDetailView: View {
 }
 
 #Preview {
-    PokemonDetailView(pokemonID: 10)
+    PokemonDetailView(pokemonID: 10, imageURL: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1")!)
 }
