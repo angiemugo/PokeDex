@@ -3,9 +3,10 @@
 
 @_exported import ApolloAPI
 
-public class GetPokemonDetailsQuery: GraphQLQuery {
+public final class GetPokemonDetailsQuery: GraphQLQuery {
   public static let operationName: String = "GetPokemonDetails"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
+    operationIdentifier: "49b14a4701a82b5f92f91aab2ef7f43cd6055954f08b381fc5f44bc9a629f70d",
     definition: .init(
       #"query GetPokemonDetails($id: Int!) { pokemon_v2_pokemon(where: {id: {_eq: $id}}) { __typename id pokemon_v2_pokemontypes { __typename pokemon_v2_type { __typename name } } pokemon_v2_pokemonabilities { __typename pokemon_v2_ability { __typename name } } pokemon_v2_pokemonmoves { __typename pokemon_v2_move { __typename name } } name pokemon_v2_pokemonsprites { __typename sprites } } }"#
     ))

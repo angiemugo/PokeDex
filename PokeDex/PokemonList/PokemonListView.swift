@@ -21,7 +21,7 @@ struct PokemonListView: View {
                 VStack {
                     Text("Use the advanced search to find the Pokèmon by type, weakness, ability and more!")
                         .padding([.horizontal])
-                    SearchView(searchText: $searchText, filters: $filters)
+                    SearchView(searchText: $searchText)
                     ScrollView {
                         LazyVGrid(columns: columns) {
                             ForEach(0..<viewModel.pokemons.count, id: \.self) { index in

@@ -11,7 +11,7 @@ import ApolloSQLite
 import ApolloAPI
 
 class Network {
-  static let shared = Network()
+    static let shared = Network()
 
     var client: ApolloClient = {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,
