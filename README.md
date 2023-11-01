@@ -1,8 +1,8 @@
 # PokeDex 
 This is Angela Mugo's submission to the take home assignment linked [here](https://holafly.notion.site/iOS-Technical-Test-PokeAPI-556834f2a76f45a6b851f262190fcb4f)
 ## Sample Screenshots 
-![IMG_8588](https://github.com/angiemugo/PokeDex/assets/23118371/13184fbb-2578-4d07-abd4-f79843d94f10)
-![IMG_8589](https://github.com/angiemugo/PokeDex/assets/23118371/7fe99740-7d2c-447f-bea4-a648d3c80d0a)
+<img src="https://github.com/angiemugo/PokeDex/assets/23118371/13184fbb-2578-4d07-abd4-f79843d94f10" width="50" height="100" alt="Pokemons List">
+<img src="https://github.com/angiemugo/PokeDex/assets/23118371/7fe99740-7d2c-447f-bea4-a648d3c80d0a" width="50" height="100" alt="Pokemons List">
 
 ## Prerequisites
 These are the tools we need to run the project 
