@@ -14,12 +14,13 @@ struct PokemonListView: View {
     @State private var presentedPokemon = NavigationPath()
     @State private var filters = Set<String>()
     @StateObject private var viewModel = PokemonListViewModel()
-
+    
     var body: some View {
         NavigationStack(path: $presentedPokemon) {
             ZStack(alignment: .bottomTrailing) {
                 VStack {
-                    Text("Use the advanced search to find the Pokèmon by type, weakness, ability and more!").padding([.horizontal])
+                    Text("Use the advanced search to find the Pokèmon by type, weakness, ability and more!")
+                        .padding([.horizontal])
                     SearchView(searchText: $searchText, filters: $filters)
                     ScrollView {
                         LazyVGrid(columns: columns) {
@@ -38,7 +39,7 @@ struct PokemonListView: View {
                                 }.buttonStyle(.plain)
                             }
                         }
-
+                        
                         if viewModel.activeRequest == nil {
                             Button(action: viewModel.loadMorePokemons) {
                                 Text("Load next page")
@@ -51,6 +52,7 @@ struct PokemonListView: View {
                         }
                     }
                 }
+                
                 VStack {
                     Button {
                         presentedPokemon.append(viewModel.pokemons.randomElement()!.id)
@@ -59,28 +61,26 @@ struct PokemonListView: View {
                         Text("Random")
                     }.tint(.primary)
                 }.frame(height: 40)
-                .roundEdges(backgroundColor: Color.yellow, lineColor: .clear)
-                .padding(.horizontal, 10)
+                    .roundEdges(backgroundColor: Color.yellow, lineColor: .clear)
+                    .padding(.horizontal, 10)
             }.navigationDestination(for: Int.self) { id in
                 PokemonDetailView(pokemonID: id, imageURL: getImageURL(id))
-            }
-            .navigationTitle("Pokèdex")
-            .task {
-                viewModel.fetchPokemons()
-            }
-            .appAlert($viewModel.appAlert)
-            .onChange(of: searchText) { newValue in
-                viewModel.filter(with: newValue)
-            }
+            }.navigationTitle("Pokèdex")
+                .task {
+                    viewModel.fetchPokemons()
+                }.appAlert($viewModel.appAlert)
+                .onChange(of: searchText) { newValue in
+                    viewModel.filter(with: newValue)
+                }
         }
     }
-
-
+    
+    
     func getImageURL(_ id: Int) -> URL {
         let pokemonIndex = id
         let baseURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
         let imageURL = "\(baseURL)\(pokemonIndex).png"
-
+        
         return URL(string: imageURL)!
     }
 }

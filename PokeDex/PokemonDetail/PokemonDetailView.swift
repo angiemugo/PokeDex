@@ -16,7 +16,7 @@ struct PokemonDetailView: View {
         _viewModel = StateObject(wrappedValue: PokemonDetailViewModel(pokemonId: pokemonID))
         self.imageURL = imageURL
     }
-    
+
     var body: some View {
         Group {
             if let _ = viewModel.activeRequest {
@@ -54,8 +54,7 @@ struct PokemonDetailView: View {
             }
         }.task {
             viewModel.loadPokemonDetails()
-        }
-        .appAlert($viewModel.appAlert)
+        }.appAlert($viewModel.appAlert)
     }
 
 }

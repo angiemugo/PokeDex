@@ -13,7 +13,7 @@ struct PokemonView: View {
     let pokemon: PokemonsAndSpecies.Pokemon
     let imageURL: URL
     let color: Color
-
+    
     var body: some View {
         VStack {
             HStack {
