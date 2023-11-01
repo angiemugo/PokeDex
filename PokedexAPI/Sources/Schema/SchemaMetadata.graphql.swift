@@ -31,6 +31,8 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "pokemon_v2_pokemonmove": return PokedexAPI.Objects.Pokemon_v2_pokemonmove
     case "pokemon_v2_move": return PokedexAPI.Objects.Pokemon_v2_move
     case "pokemon_v2_pokemonsprites": return PokedexAPI.Objects.Pokemon_v2_pokemonsprites
+    case "pokemon_v2_pokemonspecies": return PokedexAPI.Objects.Pokemon_v2_pokemonspecies
+    case "pokemon_v2_pokemoncolor": return PokedexAPI.Objects.Pokemon_v2_pokemoncolor
     default: return nil
     }
   }

@@ -1,14 +1,26 @@
-query GetPokemons($limit: Int = 20, $offset: Int!) {
-  pokemon_v2_pokemon(limit: $limit, offset: $offset) {
+query GetPokemonList($offset: Int!, $limit: Int = 20) {
+  ...PokemonsAndSpecies
+}
+
+fragment PokemonsAndSpecies on query_root {
+  pokemon: pokemon_v2_pokemon(offset: $offset, limit: $limit) {
     id
+    pokemon_species_id
     pokemon_v2_pokemontypes {
       pokemon_v2_type {
         name
       }
     }
     name
-    pokemon_v2_pokemonsprites {
-      sprites
+  }
+  species: pokemon_v2_pokemon(offset: $offset, limit: $limit) {
+    id
+    pokemon_v2_pokemonspecy {
+      id
+      pokemon_v2_pokemoncolor {
+        id
+        name
+      }
     }
   }
 }

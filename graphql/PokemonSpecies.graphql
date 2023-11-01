@@ -1,0 +1,9 @@
+query GetPokemonSpecies($id: Int!) {
+  pokemon_v2_pokemonspecies(where: {id: {_eq: $id}}) {
+          id
+    pokemon_v2_pokemoncolor {
+      name
+      id
+    }
+  }
+}

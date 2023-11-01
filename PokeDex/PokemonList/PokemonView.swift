@@ -10,20 +10,20 @@ import PokedexAPI
 import SDWebImageSwiftUI
 
 struct PokemonView: View {
-    let pokemon: GetPokemonsQuery.Data.Pokemon_v2_pokemon
+    let pokemon: PokemonsAndSpecies.Pokemon
 
     var body: some View {
         VStack {
             HStack {
-                Text(pokemon.name)
+                Text(pokemon.name.capitalized)
                 Spacer()
                 Text("#\(pokemon.id)")
             }
             Spacer()
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     ForEach(pokemon.pokemon_v2_pokemontypes, id: \.self) { pokemonType in
-                        Text(pokemonType.pokemon_v2_type?.name ?? "")
+                        Text(pokemonType.pokemon_v2_type?.name.capitalized ?? "").roundEdges(backgroundColor: Color.gray.opacity(0.5), lineColor: .clear)
                     }
                 }
                 Spacer()
@@ -36,23 +36,12 @@ struct PokemonView: View {
     }
 
     func getImageURL() -> URL? {
-        let jsonString = pokemon.pokemon_v2_pokemonsprites.first?.sprites ?? ""
+        let pokemonIndex =   pokemon.id
 
-        if let data = jsonString.data(using: .utf8) {
-            do {
-                if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                   let frontDefault = jsonObject["front_default"] as? String {
-                    let url = "https://raw.githubusercontent.com/PokeAPI/sprites/master\(frontDefault)"
-                    return URL(string: url)
+        let baseURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
+        let imageURL = "\(baseURL)\(pokemonIndex).png"
 
-                } else {
-                    print("Front Default URL not found or invalid format")
-                }
-            } catch {
-                print("Error parsing JSON: \(error)")
-            }
-        }
-        return nil
+        return URL(string: imageURL)
     }
 }
 
