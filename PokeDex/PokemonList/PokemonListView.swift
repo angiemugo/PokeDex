@@ -67,7 +67,7 @@ struct PokemonListView: View {
                 PokemonDetailView(pokemonID: id, imageURL: getImageURL(id))
             }.navigationTitle("Pokèdex")
                 .task {
-                    viewModel.fetchPokemons()
+                    viewModel.loadMorePokemons()
                 }.appAlert($viewModel.appAlert)
                 .onChange(of: searchText) { newValue in
                     viewModel.filter(with: newValue)

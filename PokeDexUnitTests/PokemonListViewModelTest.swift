@@ -12,62 +12,30 @@ import PokedexAPI
 @testable import PokeDex
 
 final class PokemonListViewModelTest: XCTestCase {
-    var viewModel: PokemonListViewModel?
-    var client: ApolloClientProtocol?
+    var viewModel: PokemonListViewModel!
+    var mockResponse: MockApolloClientResponse!
+
 
     override func setUpWithError() throws {
         viewModel = PokemonListViewModel()
-        let store = MockApolloStore()
-        client = MockApolloClient(store: store.store)
+        mockResponse = MockApolloClientResponse()
     }
 
     override func tearDownWithError() throws {
-      viewModel = nil
+        viewModel = nil
+        mockResponse = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testGetPokemons() {
+        let mockData = MockApolloClientResponse()
+        viewModel.fetchPokemons(from: mockResponse.getLoadPokemonsList())
+        XCTAssertNil(viewModel.appAlert)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testFilter() {
+        let filterText = "abc"
+        viewModel.activeRequest = mockResponse.getLoadPokemonsList() as? any Cancellable
+        viewModel.filter(with: filterText)
+        XCTAssertNotEqual(viewModel.pokemons, viewModel.unfilteredPokemons)
     }
-
-    func testGetDetails() {
-        GetPokemonDetailsQuery.Data.Pokemon_v2_pokemon.from(<#T##mock: Mock<MockObject>##Mock<MockObject>#>)
-    }
-
-    func testFetchPokemons() {
-//        viewModel.activeRequest = MockApolloClient().
-//        fetch(
-//            query: GetPokemonListQuery(offset: 0),
-//            cachePolicy: .fetchIgnoringCacheData,
-//            contextIdentifier: nil,
-//            callbackQueue: nil
-//        ) { result in
-//            // Your assertion code here to verify the behavior
-//            switch result {
-//            case .success:
-//                // Ensure that the viewModel properties are updated as expected
-//                XCTAssertEqual(viewModel.pageOffset, 20)
-//                XCTAssertFalse(viewModel.pokemons.isEmpty)
-//            case .failure:
-//                XCTFail("API request failed.")
-//            }
-//        }
-    }
-
-    func testFilterPokemons() {
-//        let mockPokemons = Mock<Pokemon_v2_pokemon>()
-
-    }
-
-
 }

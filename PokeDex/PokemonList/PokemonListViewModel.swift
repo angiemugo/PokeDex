@@ -11,7 +11,6 @@ import SwiftUI
 
 class PokemonListViewModel: ObservableObject{
     @Published var pokemons = [PokemonsAndSpecies.Pokemon]()
-    @Published var errorMessage: String?
     @Published var activeRequest: Cancellable?
     @Published var pageOffset: Int?
     @Published var appAlert: AppAlert?
