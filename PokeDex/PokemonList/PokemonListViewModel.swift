@@ -11,7 +11,6 @@ import SwiftUI
 
 class PokemonListViewModel: ObservableObject{
     @Published var pokemons = [PokemonsAndSpecies.Pokemon]()
-    @Published var errorMessage: String?
     @Published var activeRequest: Cancellable?
     @Published var pageOffset: Int?
     @Published var appAlert: AppAlert?
@@ -27,7 +26,7 @@ class PokemonListViewModel: ObservableObject{
     }
 
     func fetchPokemons(from page: Int = 0) {
-        self.activeRequest = Network.shared.apollo.fetch(query: GetPokemonListQuery(offset: page)) { [weak self] result in
+        self.activeRequest = Network.shared.client.fetch(query: GetPokemonListQuery(offset: page)) { [weak self] result in
             guard let self = self else { return }
             self.activeRequest = nil
             switch result {
@@ -55,6 +54,6 @@ class PokemonListViewModel: ObservableObject{
 
     func getColorsGrouped(for species: [PokemonsAndSpecies.Specy]) {
         let grouped = Dictionary(grouping: species, by: { $0.id})
-        self.groupedColors = grouped
+        self.groupedColors = groupedColors.merging(grouped, uniquingKeysWith:{(first, _) in first })
     }
 }

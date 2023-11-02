@@ -1,43 +1,65 @@
 {
-  "schemaNamespace" : "PokedexAPI",
-  "input" : {
-    "operationSearchPaths" : [
-      "**/*.graphql"
-    ],
-    "schemaSearchPaths" : [
-      "**/*.graphqls"
-    ]
+  "schemaNamespace": "PokedexAPI",
+  "input": {
+    "operationSearchPaths": ["**/*.graphql"],
+    "schemaSearchPaths": ["**/*.graphqls"]
   },
-  "output" : {
-    "testMocks" : {
-      "none" : {
+  "output": {
+    "testMocks": {
+      "swiftPackage": {
+        "targetName": "PokeDexTests",
+        "output": "./PokeDexTests/Mocks",
       }
     },
-    "schemaTypes" : {
-      "path" : "./PokedexAPI",
-      "moduleType" : {
-        "swiftPackageManager" : {
-        }
+    "schemaTypes": {
+      "path": "./PokedexAPI",
+      "moduleType": {
+        "swiftPackageManager": {}
       }
     },
-    "operations" : {
-      "inSchemaModule" : {
-      }
+    "operations": {
+      "inSchemaModule": {}
     }
   },
   "schemaDownloadConfiguration": {
-      "downloadMethod": {
-          "introspection": {
-              "endpointURL": "https://beta.pokeapi.co/graphql/v1beta",
-              "httpMethod": {
-                  "POST": {}
-              },
-              "includeDeprecatedInputValues": false,
-              "outputFormat": "SDL"
-          }
-      },
-      "downloadTimeout": 60,
-      "headers": [],
-      "outputPath": "./graphql/schema.graphqls"
+    "downloadMethod": {
+      "introspection": {
+        "endpointURL": "https://beta.pokeapi.co/graphql/v1beta",
+        "httpMethod": {
+          "POST": {}
+        },
+        "includeDeprecatedInputValues": false,
+        "outputFormat": "SDL"
+      }
+    },
+    "downloadTimeout": 60,
+    "headers": [],
+    "outputPath": "./graphql/schema.graphqls"
+  },
+  "options": {
+    "additionalInflectionRules": [
+      {
+        "pluralization": {
+          "replacementRegex": "animals",
+          "singularRegex": "animal"
+        }
+      }
+    ],
+    "deprecatedEnumCases": "include",
+    "schemaDocumentation": "include",
+    "selectionSetInitializers": {
+      "operations": false,
+      "namedFragments": false,
+      "localCacheMutations": true,
+      "definitionsNamed": ["MyOperation", "MyFragment"]
+    },
+    "operationDocumentFormat": ["definition", "operationId"],
+    "cocoapodsCompatibleImportStatements": false,
+    "warningsOnDeprecatedUsage": "include",
+    "conversionStrategies": {
+      "enumCases": "camelCase"
+    },
+    "pruneGeneratedFiles": true,
+    "markOperationDefinitionsAsFinal": true
   }
 }

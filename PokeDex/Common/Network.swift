@@ -7,9 +7,24 @@
 
 import Foundation
 import Apollo
+import ApolloSQLite
 
 class Network {
-  static let shared = Network()
+    static let shared = Network()
 
-  private(set) lazy var apollo = ApolloClient(url: URL(string: "https://beta.pokeapi.co/graphql/v1beta")!)
+    var client: ApolloClient = {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                                .userDomainMask,
+                                                                true).first!
+        let documentsURL = URL(filePath: documentsPath)
+        let sqliteFileURL = documentsURL.appendingPathComponent("test_apollo_db.sqlite")
+        let sqliteCache = try! SQLiteNormalizedCache(fileURL: sqliteFileURL)
+        let store = ApolloStore(cache: sqliteCache)
+        let client = URLSessionClient()
+        let provider = DefaultInterceptorProvider(store: store)
+        let url = URL(string: "https://beta.pokeapi.co/graphql/v1beta")!
+        let networkTransport = RequestChainNetworkTransport(interceptorProvider: provider, endpointURL: url)
+        return ApolloClient(networkTransport: networkTransport, store: store)
+    }()
 }
+

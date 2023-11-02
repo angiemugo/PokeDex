@@ -3,9 +3,10 @@
 
 @_exported import ApolloAPI
 
-public class GetPokemonListQuery: GraphQLQuery {
+public final class GetPokemonListQuery: GraphQLQuery {
   public static let operationName: String = "GetPokemonList"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
+    operationIdentifier: "c2af2f1d0425fd37acecabd5038ab9cd4e504a681259e6e1ee45276d1c696abf",
     definition: .init(
       #"query GetPokemonList($offset: Int!, $limit: Int = 20) { ...PokemonsAndSpecies }"#,
       fragments: [PokemonsAndSpecies.self]
