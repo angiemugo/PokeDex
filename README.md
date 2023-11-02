@@ -14,12 +14,10 @@ These are the tools we need to run the project
 2. `$ cd PokeDex `
 3. `$ open PokeDex.xcodeproj `
 
-
 ## Getting started 
 1. Open the Xcode project in Xcode.
 2. Build and run the project.
 3. Explore the app on the iOS Simulator.
-
 
 ## Project Structure 
 PokeDex/
@@ -43,10 +41,9 @@ PokeDex/
  **Testing Framework:** XCTest
  **Third-party Libraries:**: Apollo, SDWebImage
 
-
 ## App Features 
 [X] Display a list of Pokemon retrieved from the PokeAPI. Each Pokemon should display the name, image, and type(s).
-    - Using the apollo framork, I was able to group the two requests(get pokemons and get pokemon species) needed to get this information into one.
+    - Using the apollo framework, I was able to group the two requests(get pokemons and get pokemon species) needed to get this information into one.
 [X] Tapping a Pokemon in the list should display the Pokemon's detail view. The detail view should display the name, full image, type(s), abilities, and moves.
     - This information I got from the species endpoint 
 [X] Allow the user to search for Pokemon by name.
@@ -64,7 +61,3 @@ PokeDex/
 [X] Use a third-party library for image loading (e.g. KingFisher or SDWebImage).
 [X] The app’s UI should be responsive on different devices and orientations.
 [ ] Write unit tests for the networking layer of the app - I really struggled with this. Being relaltively new to apollo, I could not get my head around to mocking the client thus testing efficiently. There is also very limited documentation for this so I would need some more time to discover and learn how to do this. 
-
-
- 
-
